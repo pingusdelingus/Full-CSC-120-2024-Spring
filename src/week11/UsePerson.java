@@ -29,7 +29,7 @@ public class UsePerson {
 
 //----Print person information via accessors
         System.out.println("Raw access shows that " + onePerson.getName() + " is " +
-                onePerson.getAge() + " years old");
+                onePerson.getAge() + " years old");//
     }
 //-------------------------------------------------------------------------------------------------
 }
