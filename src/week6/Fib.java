@@ -59,18 +59,23 @@ public class Fib {
         // getting candidates into the array
 
         do {
-            System.out.println("Please enter numbers (0 to stop) ");
-            userInput = keyboard.nextInt();
-            if (userInput < 0) {
-                System.out.println("Positive numbers only silly! Try again");
-                userInput = 0;
-            }
-            candidates[index] = userInput;
-            index = index + 1;
-            if (userInput == 0) {
-                return candidates;
-            }
+            try {
+                System.out.println("Please enter numbers (0 to stop) ");
+                userInput = keyboard.nextInt();
 
+                if (userInput < 0) {
+                    System.out.println("Positive numbers only silly! Try again");
+                    userInput = 0;
+                }
+                candidates[index] = userInput;
+                index = index + 1;
+                if (userInput == 0) {
+                    return candidates;
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input, try again");
+                userInput = keyboard.nextInt();
+            }
 
         } while (userInput >= 0);
         return candidates;
