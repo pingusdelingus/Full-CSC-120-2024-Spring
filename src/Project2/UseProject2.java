@@ -6,9 +6,11 @@ import java.io.*;
 
 
 public class UseProject2 {
+    static int forestIndex = 0;
+    static Forest currentForest;
     private static final Scanner keyboard = new Scanner(System.in);
 
-    private static void main(String[] args) {
+    public  static void main(String[] args) {
 
         String fileName;
         FileReader fromReader = null;
@@ -22,28 +24,6 @@ public class UseProject2 {
         // Tries to open file from CMD line arguments at position 0
         // if found, prints out whole file.
 
-        try{
-            fromReader = new FileReader(args[0]);
-            aChar = fromReader.read();
-            while(aChar != -1){
-                System.out.print((char) aChar);
-                aChar = fromReader.read();
-
-            }
-        } catch(FileNotFoundException e){
-            System.out.println("404: File not found" + e.getMessage());
-
-        }catch(IOException e){
-            System.out.println("Something went wrong! " + e.getMessage());
-        }finally {
-            if (fromReader != null){
-                try {
-                    fromReader.close();
-                }catch(IOException e){
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
 
 
 
@@ -54,28 +34,77 @@ public class UseProject2 {
 
 
 }// end of main METHOD
+private static boolean menu(String[] args){
+    boolean keepGoing = true;
+    char choice;
+    System.out.println("Initializing from " + args[forestIndex] );
+
+    do {
+
+        System.out.println("(P)rint, (A)dd, (C)ut, (G)row, (R)eap, (S)ave, (L)oad, (N)ext, e(X)it: ");
+        // get user's choice from keyboard
+        choice = keyboard.next().toUpperCase().charAt(0);
+
+        switch (choice) {
+            case 'A':
+                addTree(currentForest);
+                break;
+            case 'G':
+                simulateGrowth(currentForest);
+                break;
+            case 'C':
+                cutTree(currentForest);
+                break;
+            case 'R':
+                reapTrees(currentForest);
+                break;
+            case 'S':
+                saveForestAsDB(currentForest);
+                break;
+            case 'L':
+                loadForest();
+                break;
+            case 'N':
+                nextForest();
+                break;
+            case 'P':
+                printForest(currentForest);
+                break;
+            case 'X':
+                keepGoing = false;
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+        }
+
+    }while choice != 'X';
+    return keepGoing;
+
+}// end of menu METHOD
+
+
 
 private static void printForest(Forest currentForest) {
 
 }// end of printForest METHOD
 
-private static void addTree(currentForest) {
+private static void addTree(Forest currentForest) {
 
 }// end of addTree METHOD
 
 private static boolean simulateGrowth(Forest currentForest) {
-
+return true;
 }// end of simulateGrowth METHOD
 
 private static boolean cutTree(Forest currentForest) {
-
+return true;
 }// end of cutTree METHOD
 
-private static reapTrees(Forest currentForrest) {
+private static void reapTrees(Forest currentForrest) {
 
 }// end of reapTrees METHOD
 
-private static saveForestAsDB(Forest currentForest) {
+private static void saveForestAsDB(Forest currentForest) {
 
 }// end saveForestAsDB
 
@@ -83,7 +112,11 @@ private static void loadForest() {
 
 }// end of loadForest METHOD
 
-private static void nextForest() {
+private static void nextForest(String[] args) {
+        forestIndex += 1;
+        if(forestIndex >= args.length){
+            forestIndex = 0;
+        }
 
 }// end of nextForest
 

@@ -8,7 +8,7 @@ public class Deck {
             int index;
 
             deckOfCards = new int [4][14];
-            for(index = 0l)
+
 
         }// end of Deck CONSTRUCTOR
 
