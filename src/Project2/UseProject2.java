@@ -6,11 +6,16 @@ import java.io.*;
 
 
 public class UseProject2 {
+    public String relativePath = "Monstane.csv";
+
     static int forestIndex = 0;
-    static Forest currentForest;
+    static Forest currentForest = new Forest();
+
     private static final Scanner keyboard = new Scanner(System.in);
 
     public  static void main(String[] args) {
+
+
 
         String fileName;
         FileReader fromReader = null;
@@ -23,6 +28,7 @@ public class UseProject2 {
 
         // Tries to open file from CMD line arguments at position 0
         // if found, prints out whole file.
+        menu(args);
 
 
 
@@ -37,9 +43,20 @@ public class UseProject2 {
 private static boolean menu(String[] args){
     boolean keepGoing = true;
     char choice;
+
+
+    String relativePath = "Monstane.csv";
+    String workingDir = System.getProperty("user.dir");
+    File file = new File(workingDir, relativePath);
+    String absolutePath = file.getAbsolutePath();
+
+
     System.out.println("Initializing from " + args[forestIndex] );
 
+
     do {
+      currentForest = new Forest(args[forestIndex], absolutePath);
+        currentForest.setupForest();
 
         System.out.println("(P)rint, (A)dd, (C)ut, (G)row, (R)eap, (S)ave, (L)oad, (N)ext, e(X)it: ");
         // get user's choice from keyboard
@@ -65,7 +82,7 @@ private static boolean menu(String[] args){
                 loadForest();
                 break;
             case 'N':
-                nextForest();
+                nextForest(args);
                 break;
             case 'P':
                 printForest(currentForest);
@@ -77,7 +94,7 @@ private static boolean menu(String[] args){
                 System.out.println("Invalid choice. Please try again.");
         }
 
-    }while choice != 'X';
+    }while( choice != 'X');
     return keepGoing;
 
 }// end of menu METHOD

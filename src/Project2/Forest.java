@@ -10,6 +10,8 @@ public class Forest implements Serializable{
     private String name;
     private String csvPath;
     private ArrayList<Tree> listOfTrees = new ArrayList<Tree>();
+
+
     public Forest (){
         name = "";
     }// end of default constructor
@@ -32,6 +34,7 @@ public class Forest implements Serializable{
                 double treeGrowthRate = keyboard.nextDouble();
                 Tree tree = new Tree(treeHeight, treeBirthYear, treeGrowthRate, treeSpecies);
                 listOfTrees.add(tree);
+                System.out.println("Tree added: " + treeSpecies + " " + treeBirthYear + " " + treeHeight + " " + treeGrowthRate);
             }
             keyboard.close();
         } catch (FileNotFoundException e) {
