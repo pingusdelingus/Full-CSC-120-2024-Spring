@@ -1,12 +1,13 @@
 package Project2;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 import java.io.*;
 
 
 public class UseProject2 {
-    public String relativePath = "Monstane.csv";
+    public String relativePath = "Montane.csv";
 
     static int forestIndex = 0;
     static Forest currentForest = new Forest();
@@ -43,6 +44,7 @@ public class UseProject2 {
 private static boolean menu(String[] args){
     boolean keepGoing = true;
     char choice;
+    boolean savedS;
 
 
     String relativePath = "Monstane.csv";
@@ -52,11 +54,11 @@ private static boolean menu(String[] args){
 
 
     System.out.println("Initializing from " + args[forestIndex] );
-
-
+    ArrayList<Tree> =
+    currentForest = new Forest(args[forestIndex], absolutePath, ArrayList<Tree> Treelist);
     do {
-      currentForest = new Forest(args[forestIndex], absolutePath);
-        currentForest.setupForest();
+
+
 
         System.out.println("(P)rint, (A)dd, (C)ut, (G)row, (R)eap, (S)ave, (L)oad, (N)ext, e(X)it: ");
         // get user's choice from keyboard
@@ -76,10 +78,14 @@ private static boolean menu(String[] args){
                 reapTrees(currentForest);
                 break;
             case 'S':
-                saveForestAsDB(currentForest);
+
+                savedS = saveForestAsDB(currentForest.getName(), currentForest);
+                if (savedS){
+                    System.out.println("Happy Days, Saved successfully!");
+                }
                 break;
             case 'L':
-                loadForest();
+                loadForest(currentForest.getName());
                 break;
             case 'N':
                 nextForest(args);
@@ -121,11 +127,14 @@ private static void reapTrees(Forest currentForrest) {
 
 }// end of reapTrees METHOD
 
-private static void saveForestAsDB(Forest currentForest) {
-
+private static boolean saveForestAsDB(String ForestName, Forest currentForest) {
+        boolean savedSuccessfully;
+    savedSuccessfully = currentForest.saveForest(ForestName ,currentForest);
+    return savedSuccessfully;
 }// end saveForestAsDB
 
-private static void loadForest() {
+private static void loadForest(String fileName) {
+        currentForest.loadForest(fileName);
 
 }// end of loadForest METHOD
 
@@ -139,7 +148,19 @@ private static void nextForest(String[] args) {
 
 
 
+private static Forest setupForest(String fileName){
+        BufferedReader fromBuffer = null;
+        String aLine;
+        int lineNumber;
+        try {
+            fromBuffer = new BufferedReader(new FileReader(fileName));
+        }catch(IOException e){
+            System.out.println("Error reading file stupid hoe!");
+            return (null);
+        }
+        for (lineNumber = 0 ; lineNumber < lin)
 
+}// end of setupForest
 
 
 }// end of UseProject2 CLASS

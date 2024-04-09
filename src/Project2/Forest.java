@@ -3,12 +3,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import java.util.Locale;
-
 public class Forest implements Serializable{
 
+
+
     private String name;
-    private String csvPath;
+    private String fileName;
     private ArrayList<Tree> listOfTrees = new ArrayList<Tree>();
 
 
@@ -16,31 +16,13 @@ public class Forest implements Serializable{
         name = "";
     }// end of default constructor
 
-    public Forest(String name, String csvPath){
+    public Forest(String name, String fileName, ArrayList<Tree> Trees){
         this();
         this.name = name;
-        this.csvPath = csvPath;
+        this.fileName = fileName;
     }// end of Forrest CONSTRUCTOR
 
-    public void setupForest(){
-        try {
-            File file = new File(csvPath);
-            Scanner keyboard = new Scanner(file);
-            keyboard.useDelimiter(",");
-            while(keyboard.hasNext()){
-                Tree.Species treeSpecies = Tree.Species.valueOf(keyboard.next().toUpperCase());
-                int treeBirthYear = keyboard.nextInt();
-                double treeHeight = keyboard.nextInt();
-                double treeGrowthRate = keyboard.nextDouble();
-                Tree tree = new Tree(treeHeight, treeBirthYear, treeGrowthRate, treeSpecies);
-                listOfTrees.add(tree);
-                System.out.println("Tree added: " + treeSpecies + " " + treeBirthYear + " " + treeHeight + " " + treeGrowthRate);
-            }
-            keyboard.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }// end of setupForest METHOD
+
 
 
     public void addTree(Tree tree){
@@ -50,6 +32,57 @@ public class Forest implements Serializable{
     public void cutTree(Tree tree){
         listOfTrees.remove(tree);
     }// end of cutTree METHOD
+
+    public  boolean saveForest(String fileName , Forest theForest){
+        ObjectOutputStream toStream = null;
+        try {
+            toStream = new ObjectOutputStream(new FileOutputStream(fileName));
+            toStream.writeObject(theForest);
+            return true;
+        }catch(IOException e){
+            System.out.println("ERROR Saving fix yo shit!");
+            return false;
+
+        }finally {
+            if (toStream != null){
+                try{
+                    toStream.close();
+                }catch(IOException e){
+                    System.out.println("Error closing fix yo shit!");
+
+                }
+            }
+        }
+
+    }// end of saveForest
+
+    public String getName(){
+        return this.name;
+    }// end of getName
+
+    public  Forest loadForest(String fileName){
+        ObjectInputStream fromStream = null;
+        Forest local;
+        try {
+            fromStream = new ObjectInputStream(new FileInputStream(fileName));
+            local = (Forest)fromStream.readObject();
+            return(local);
+        }catch(IOException e){
+            System.out.println("ERROR loading fix yo shit! " + e.getMessage());
+            return(null);
+        }catch(ClassNotFoundException e){
+            System.out.println(e.getMessage());
+            return(null);
+        }finally{
+            if (fromStream != null){
+               try{ fromStream.close();
+            }catch (IOException e){
+                   System.out.println("ERROR Closing fix yo shit!" + e.getMessage());
+
+               }
+        }
+
+    }// end of loadForest
 
 
 
