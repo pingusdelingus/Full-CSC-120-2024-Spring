@@ -11,6 +11,7 @@ public class UseProject2 {
 
     static int forestIndex = 0;
     static Forest currentForest = new Forest();
+    static ArrayList<String>
 
     private static final Scanner keyboard = new Scanner(System.in);
 
@@ -148,17 +149,24 @@ private static void nextForest(String[] args) {
 
 
 
-private static Forest setupForest(String fileName){
+private static ArrayList<String> setupForest(String fileName, ArrayList<String> lines)throws IOException{
         BufferedReader fromBuffer = null;
         String aLine;
-        int lineNumber;
+
         try {
             fromBuffer = new BufferedReader(new FileReader(fileName));
         }catch(IOException e){
             System.out.println("Error reading file stupid hoe!");
-            return (null);
+
         }
-        for (lineNumber = 0 ; lineNumber < lin)
+    aLine = fromBuffer.readLine();
+        while(aLine != null){
+            lines.add(aLine);
+
+            aLine = fromBuffer.readLine();
+        }
+        fromBuffer.close();
+        return lines;
 
 }// end of setupForest
 

@@ -20,6 +20,7 @@ public class Forest implements Serializable{
         this();
         this.name = name;
         this.fileName = fileName;
+        this.listOfTrees
     }// end of Forrest CONSTRUCTOR
 
 

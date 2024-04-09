@@ -17,6 +17,7 @@ public class Tree {
         this.growthRatePerYear = 0;
         this.Species = treeSpecies;
 
+
     }// end of Tree  constructor
 
 
