@@ -11,7 +11,7 @@ public class Tree {
     private Species Species;
     private double growthRatePerYear;
 
-    public Tree(double treeHeight, int treeBirthYear, double treeGrowthRate, Species treeSpecies){
+    public Tree(Species treeSpecies,int treeBirthYear, double treeHeight,  double treeGrowthRate){
         this.treeHeight = 0;
         this.birthYear = 0;
         this.growthRatePerYear = 0;

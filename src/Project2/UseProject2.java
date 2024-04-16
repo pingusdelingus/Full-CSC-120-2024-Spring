@@ -1,17 +1,12 @@
 package Project2;
-
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 import java.io.*;
-
-
 public class UseProject2 {
-    public String relativePath = "Montane.csv";
 
-    static int forestIndex = 0;
-    static Forest currentForest = new Forest();
-    static ArrayList<String>
+
+
 
     private static final Scanner keyboard = new Scanner(System.in);
 
@@ -28,8 +23,7 @@ public class UseProject2 {
         System.out.println("Welcome to the Forestry Simulation");
         System.out.println("----------------------------------");
 
-        // Tries to open file from CMD line arguments at position 0
-        // if found, prints out whole file.
+
         menu(args);
 
 
@@ -46,17 +40,21 @@ private static boolean menu(String[] args){
     boolean keepGoing = true;
     char choice;
     boolean savedS;
+    int forestIndex = 0;
+
+    Forest currentForest = new Forest();
 
 
-    String relativePath = "Monstane.csv";
-    String workingDir = System.getProperty("user.dir");
-    File file = new File(workingDir, relativePath);
-    String absolutePath = file.getAbsolutePath();
-
-
+    String csvPath = args[forestIndex] + ".csv";
     System.out.println("Initializing from " + args[forestIndex] );
-    ArrayList<Tree> =
-    currentForest = new Forest(args[forestIndex], absolutePath, ArrayList<Tree> Treelist);
+    try {
+        setupForest(csvPath);
+    }catch(IOException e){
+        System.out.println("suck on my jim jams!");
+    }
+
+
+
     do {
 
 
@@ -149,12 +147,23 @@ private static void nextForest(String[] args) {
 
 
 
-private static ArrayList<String> setupForest(String fileName, ArrayList<String> lines)throws IOException{
+private static ArrayList<Tree> setupForest(String fileName)throws IOException{
         BufferedReader fromBuffer = null;
         String aLine;
-
+        ArrayList<Tree> ListOfMyTrees = new ArrayList<Tree>();
+        String[] ListOfStrings;
         try {
+
             fromBuffer = new BufferedReader(new FileReader(fileName));
+            aLine = fromBuffer.readLine();
+            while(aLine != null){
+                ListOfStrings = aLine.split(" ,");
+                ListOfMyTrees.add(new Tree(Tree.Species.valueOf(ListOfStrings[0]),
+                        Integer.parseInt(ListOfStrings[1]),
+                        Double.parseDouble(ListOfStrings[2]), Double.parseDouble(ListOfStrings[3])));
+
+
+            }
         }catch(IOException e){
             System.out.println("Error reading file stupid hoe!");
 
@@ -166,7 +175,7 @@ private static ArrayList<String> setupForest(String fileName, ArrayList<String> 
             aLine = fromBuffer.readLine();
         }
         fromBuffer.close();
-        return lines;
+        return ListOfMyTrees;
 
 }// end of setupForest
 
