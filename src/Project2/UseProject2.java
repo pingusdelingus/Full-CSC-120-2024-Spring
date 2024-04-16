@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.io.*;
 public class UseProject2 {
+    public static int forestIndex = 0;
 
 
 
@@ -40,57 +41,55 @@ private static boolean menu(String[] args){
     boolean keepGoing = true;
     char choice;
     boolean savedS;
-    int forestIndex = 0;
+
 
     Forest currentForest = new Forest();
 
 
-    String csvPath = args[forestIndex] + ".csv";
+    String csvPath = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/"
+            + args[forestIndex] + ".csv";
     System.out.println("Initializing from " + args[forestIndex] );
-    try {
-        setupForest(csvPath);
-    }catch(IOException e){
-        System.out.println("suck on my jim jams!");
-    }
+
+        Forest TrialForest = new Forest (args[forestIndex], csvPath, setupForest(csvPath));
+
 
 
 
     do {
-
-
-
         System.out.println("(P)rint, (A)dd, (C)ut, (G)row, (R)eap, (S)ave, (L)oad, (N)ext, e(X)it: ");
         // get user's choice from keyboard
-        choice = keyboard.next().toUpperCase().charAt(0);
+        choice = Character.toUpperCase(keyboard.next().charAt(0));
 
         switch (choice) {
             case 'A':
-                addTree(currentForest);
+                addTree(TrialForest);
                 break;
             case 'G':
-                simulateGrowth(currentForest);
+                simulateGrowth(TrialForest);
                 break;
             case 'C':
-                cutTree(currentForest);
+                cutTree(TrialForest);
                 break;
             case 'R':
-                reapTrees(currentForest);
+                reapTrees(TrialForest);
                 break;
             case 'S':
-
-                savedS = saveForestAsDB(currentForest.getName(), currentForest);
+                savedS = saveForestAsDB(TrialForest.getName(), TrialForest);
                 if (savedS){
                     System.out.println("Happy Days, Saved successfully!");
                 }
                 break;
             case 'L':
-                loadForest(currentForest.getName());
+                loadForest(TrialForest.getName());
                 break;
             case 'N':
                 nextForest(args);
                 break;
             case 'P':
-                printForest(currentForest);
+
+                printForest(TrialForest);
+                System.out.println("There are " + TrialForest.getForestSize() + " with an average height" +
+                        " of " + TrialForest.getAverageSize());
                 break;
             case 'X':
                 keepGoing = false;
@@ -107,11 +106,33 @@ private static boolean menu(String[] args){
 
 
 private static void printForest(Forest currentForest) {
+    System.out.println("Forrest name: " + currentForest.getName());
+        currentForest.display();
 
 }// end of printForest METHOD
 
 private static void addTree(Forest currentForest) {
+    int randomBirthYear;
+    double randomHeight, randomGrowthRate, randomSpecies;
+    Tree.Species newTreeSpecies = null;
 
+    randomSpecies = Math.round(Math.random() * 2);
+    switch ((int)randomSpecies){
+        case 0:
+            newTreeSpecies = Tree.Species.Birch;
+            break;
+        case 1:
+            newTreeSpecies = Tree.Species.Maple;
+            break;
+        case 2:
+            newTreeSpecies = Tree.Species.Fir;
+            break;
+
+    }
+    randomBirthYear = (int) Math.round(Math.random() * 20) + 2000;
+    randomHeight = ( Math.random() * 10 )+ 10;
+    randomGrowthRate = Math.random() * 10 + 10;
+    currentForest.addTree(new Tree(newTreeSpecies, randomBirthYear, randomHeight, randomGrowthRate, currentForest.getForestSize()));
 }// end of addTree METHOD
 
 private static boolean simulateGrowth(Forest currentForest) {
@@ -119,6 +140,11 @@ return true;
 }// end of simulateGrowth METHOD
 
 private static boolean cutTree(Forest currentForest) {
+    System.out.println("Tree number to cut down: ");
+    int indexToCut;
+    indexToCut = keyboard.nextInt();
+
+
 return true;
 }// end of cutTree METHOD
 
@@ -133,7 +159,7 @@ private static boolean saveForestAsDB(String ForestName, Forest currentForest) {
 }// end saveForestAsDB
 
 private static void loadForest(String fileName) {
-        currentForest.loadForest(fileName);
+    //currentForest.loadForest(fileName);
 
 }// end of loadForest METHOD
 
@@ -147,34 +173,30 @@ private static void nextForest(String[] args) {
 
 
 
-private static ArrayList<Tree> setupForest(String fileName)throws IOException{
+private static ArrayList<Tree> setupForest(String fileName){
         BufferedReader fromBuffer = null;
         String aLine;
         ArrayList<Tree> ListOfMyTrees = new ArrayList<Tree>();
         String[] ListOfStrings;
+        int treeNumber = 0;
         try {
 
             fromBuffer = new BufferedReader(new FileReader(fileName));
             aLine = fromBuffer.readLine();
             while(aLine != null){
-                ListOfStrings = aLine.split(" ,");
+                ListOfStrings = aLine.split(",");
                 ListOfMyTrees.add(new Tree(Tree.Species.valueOf(ListOfStrings[0]),
                         Integer.parseInt(ListOfStrings[1]),
-                        Double.parseDouble(ListOfStrings[2]), Double.parseDouble(ListOfStrings[3])));
-
+                        Double.parseDouble(ListOfStrings[2]), Double.parseDouble(ListOfStrings[3]), treeNumber));
+                        treeNumber++;
+                aLine = fromBuffer.readLine();
 
             }
         }catch(IOException e){
             System.out.println("Error reading file stupid hoe!");
 
         }
-    aLine = fromBuffer.readLine();
-        while(aLine != null){
-            lines.add(aLine);
 
-            aLine = fromBuffer.readLine();
-        }
-        fromBuffer.close();
         return ListOfMyTrees;
 
 }// end of setupForest

@@ -3,22 +3,26 @@ package Project2;
 public class Tree {
     private double treeHeight;
     public enum Species{
-        birch,
-        maple,
-        fir
+        Birch,
+        Maple,
+        Fir
     }
     private int birthYear;
-    private Species Species;
+    private Species Treespecies;
+    private int treeNum;
+
     private double growthRatePerYear;
 
-    public Tree(Species treeSpecies,int treeBirthYear, double treeHeight,  double treeGrowthRate){
-        this.treeHeight = 0;
-        this.birthYear = 0;
-        this.growthRatePerYear = 0;
-        this.Species = treeSpecies;
-
-
-    }// end of Tree  constructor
+    public Tree(Species treeSpecies,int treeBirthYear, double treeHeight,  double treeGrowthRate,int treeNumber){
+        this.treeHeight = treeHeight;
+        this.birthYear = treeBirthYear;
+        this.growthRatePerYear = treeGrowthRate;
+        this.Treespecies = treeSpecies;
+        this.treeNum = treeNumber;
+    }// end of Tree constructor
+    public Tree(int treeNumber){
+        this.treeNum = treeNumber;
+    }// end of tree number constructor
 
 
     public void grow(Tree tree){
@@ -30,6 +34,14 @@ public class Tree {
         }
 
     }// end of reapTree METHOD
+
+    public String toString(){
+        return  this.Treespecies + "  " + this.birthYear + "  " + this.treeHeight + "' " + this.growthRatePerYear;
+    }// end of toString
+
+    public double getHeight(){
+        return this.treeHeight;
+    }// end of getHeight
 
 
 }// end of Tree CLASS
