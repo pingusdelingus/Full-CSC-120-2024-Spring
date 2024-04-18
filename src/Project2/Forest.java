@@ -24,8 +24,9 @@ public class Forest implements Serializable{
         listOfTrees.add(tree);
     }// end of addTree method
 
-    public void cutTree(Tree tree){
-        listOfTrees.remove(tree);
+    public void cutTree(int treeIndex){
+        listOfTrees.remove(treeIndex);
+
     }// end of cutTree method
 
     public boolean saveForest(String fileName , Forest theForest){
@@ -100,8 +101,10 @@ public class Forest implements Serializable{
 
     public void growForest(){
         int index;
-        for (index = 0; index < listOfTrees.size(); index++){
 
+        for (index = 0; index < listOfTrees.size(); index++){
+            Tree tempTree = listOfTrees.get(index);
+            tempTree.grow(tempTree);
         }// end of for loop
     }// end of growForest
 

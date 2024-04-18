@@ -63,12 +63,15 @@ private static boolean menu(String[] args){
         switch (choice) {
             case 'A':
                 addTree(TrialForest);
+                //done
                 break;
             case 'G':
                 simulateGrowth(TrialForest);
+                //done
                 break;
             case 'C':
                 cutTree(TrialForest);
+                //done
                 break;
             case 'R':
                 reapTrees(TrialForest);
@@ -135,17 +138,18 @@ private static void addTree(Forest currentForest) {
     currentForest.addTree(new Tree(newTreeSpecies, randomBirthYear, randomHeight, randomGrowthRate, currentForest.getForestSize()));
 }// end of addTree METHOD
 
-private static boolean simulateGrowth(Forest currentForest) {
-return true;
+private static void simulateGrowth(Forest currentForest) {
+    currentForest.growForest();
+
 }// end of simulateGrowth METHOD
 
-private static boolean cutTree(Forest currentForest) {
+private static void cutTree(Forest currentForest) {
     System.out.println("Tree number to cut down: ");
     int indexToCut;
+    indexToCut = 0;
     indexToCut = keyboard.nextInt();
+    currentForest.cutTree(indexToCut);
 
-
-return true;
 }// end of cutTree METHOD
 
 private static void reapTrees(Forest currentForrest) {
