@@ -98,6 +98,11 @@ public class Forest implements Serializable{
         return sum;
     }// end of getAverageSize
 
-    public
+    public void growForest(){
+        int index;
+        for (index = 0; index < listOfTrees.size(); index++){
+
+        }// end of for loop
+    }// end of growForest
 
 }// end of the Forest class
