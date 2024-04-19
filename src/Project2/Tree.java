@@ -26,8 +26,9 @@ public class Tree {
 
 
     public void grow(Tree tree){
-        this.treeHeight = (this.treeHeight + (this.growthRatePerYear * this.treeHeight));
-        this.birthYear = this.birthYear + 1;
+
+        this.treeHeight = ((this.growthRatePerYear / 100) * this.treeHeight) + this.treeHeight;
+
     }
     public void reapTree(double reapHeight){
         if(this.treeHeight >= reapHeight){
