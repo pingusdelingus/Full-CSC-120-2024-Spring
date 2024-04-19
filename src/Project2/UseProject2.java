@@ -87,6 +87,11 @@ private static boolean menu(String[] args){
                 break;
             case 'N':
                 nextForest(args);
+                forestIndex += 1;
+                String newCSVPath = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/"
+                        + args[forestIndex] + ".csv";
+                 TrialForest = new Forest (args[forestIndex], csvPath, setupForest(csvPath));
+
                 break;
             case 'P':
 
@@ -135,6 +140,8 @@ private static void addTree(Forest currentForest) {
     randomBirthYear = (int) Math.round(Math.random() * 20) + 2000;
     randomHeight = ( Math.random() * 10 )+ 10;
     randomGrowthRate = Math.random() * 10 + 10;
+    randomHeight = Math.round(randomHeight * 10.0 ) / 10.0;
+    randomGrowthRate = Math.round(randomGrowthRate * 10.0) / 10.0;
     currentForest.addTree(new Tree(newTreeSpecies, randomBirthYear, randomHeight, randomGrowthRate, currentForest.getForestSize()));
 }// end of addTree METHOD
 
@@ -223,4 +230,4 @@ private static ArrayList<Tree> setupForest(String fileName){
 }// end of setupForest
 
 
-}// end of UseProject2 CLASS asdf
+}// end of UseProject2 CLASS
