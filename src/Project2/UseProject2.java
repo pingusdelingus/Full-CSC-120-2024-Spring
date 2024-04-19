@@ -3,11 +3,12 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 import java.io.*;
+
+/**
+ * Driver class for Forestry Simulation Project
+ */
 public class UseProject2 {
     public static int forestIndex = 0;
-
-
-
 
     private static final Scanner keyboard = new Scanner(System.in);
 
@@ -44,11 +45,15 @@ private static boolean menu(String[] args){
 
 
     Forest currentForest = new Forest();
-
+    //trial
+    File estebansFile = new File("Montane.csv");
+    String absolute = estebansFile.getAbsolutePath();
+    System.out.println(absolute);
 
     String csvPath = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/"
             + args[forestIndex] + ".csv";
     System.out.println("Initializing from " + args[forestIndex] );
+    System.out.println(csvPath);
 
         Forest TrialForest = new Forest (args[forestIndex], csvPath, setupForest(csvPath));
 
@@ -90,7 +95,7 @@ private static boolean menu(String[] args){
                 forestIndex += 1;
                 String newCSVPath = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/"
                         + args[forestIndex] + ".csv";
-                 TrialForest = new Forest (args[forestIndex], csvPath, setupForest(csvPath));
+                 TrialForest = new Forest (args[forestIndex], newCSVPath, setupForest(newCSVPath));
 
                 break;
             case 'P':

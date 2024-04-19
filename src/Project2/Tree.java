@@ -1,5 +1,9 @@
 package Project2;
 
+/**
+ *  This class represents a Tree
+ *  with properties: species, birth year, height, and growth rate.
+ */
 public class Tree {
     private double treeHeight;
     public enum Species{
