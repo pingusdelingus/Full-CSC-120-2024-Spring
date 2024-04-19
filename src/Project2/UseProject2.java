@@ -77,7 +77,7 @@ private static boolean menu(String[] args){
                 reapTrees(TrialForest);
                 break;
             case 'S':
-                savedS = saveForestAsDB(TrialForest.getName(), TrialForest);
+                savedS = saveForestAsDB(csvPath, TrialForest);
                 if (savedS){
                     System.out.println("Happy Days, Saved successfully!");
                 }
@@ -153,12 +153,29 @@ private static void cutTree(Forest currentForest) {
 }// end of cutTree METHOD
 
 private static void reapTrees(Forest currentForrest) {
+        int userInput = 0;
+        int index;
+        System.out.println("Height to reap from: ");
+        userInput = keyboard.nextInt();
+        for(index = 0; index < currentForrest.getForestSize(); index++){
+            if (currentForrest.getHeightOfTreeAtIndex(index) > userInput){
+                System.out.print("Replacing the tall tree ");
+                System.out.println(currentForrest.getSpecificTreeString(index));
+                currentForrest.cutTree(index);
+                System.out.print("Replaced with new tree ");
+                addTree(currentForrest);
+                System.out.println(currentForrest.getLatestTree());
+
+            }// end of if
+        }// end of for loop
+
+
 
 }// end of reapTrees METHOD
 
 private static boolean saveForestAsDB(String ForestName, Forest currentForest) {
         boolean savedSuccessfully;
-    savedSuccessfully = currentForest.saveForest(ForestName ,currentForest);
+        savedSuccessfully = currentForest.saveForest(ForestName ,currentForest);
     return savedSuccessfully;
 }// end saveForestAsDB
 

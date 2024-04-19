@@ -107,5 +107,29 @@ public class Forest implements Serializable{
             tempTree.grow(tempTree);
         }// end of for loop
     }// end of growForest
+    public double getHeightOfTreeAtIndex(int desiredTreeIndex){
+        if(desiredTreeIndex <= listOfTrees.size()) {
+            return listOfTrees.get(desiredTreeIndex).getHeight();
+        }
+        else {
+            return 0.0;
+        }
+    }// end of getHeightOfTreeAtIndex
+
+    public String getSpecificTreeString(int desiredTreeIndex){
+        if(desiredTreeIndex <= listOfTrees.size()) {
+            return listOfTrees.get(desiredTreeIndex).toString();
+        }
+        else{
+            return "ERROR CANT GET TREE INFO";
+        }
+    }// end of getSpecificTreeString
+
+    public String getLatestTree(){
+        Tree tempTree =  listOfTrees.get(listOfTrees.size() - 1);
+        return tempTree.toString();
+    }// end of getLatestTree
+
+
 
 }// end of the Forest class
