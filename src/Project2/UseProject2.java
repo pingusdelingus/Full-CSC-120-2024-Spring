@@ -1,5 +1,6 @@
 package Project2;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 import java.io.*;
@@ -50,7 +51,7 @@ private static boolean menu(String[] args){
     String csvPath = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/"
             + args[forestIndex] + ".csv";
     System.out.println("Initializing from " + args[forestIndex] );
-    System.out.println(csvPath);
+
 
         Forest TrialForest = new Forest (args[forestIndex], csvPath, setupForest(csvPath));
 
@@ -90,6 +91,7 @@ private static boolean menu(String[] args){
                 }
                 break;
             case 'L':
+                System.out.println("Enter forest name:");
                 String inputForest = keyboard.next();
                 inputForest = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/" + inputForest + ".db";
 
@@ -97,10 +99,20 @@ private static boolean menu(String[] args){
                 break;
             case 'N':
                 forestIndex += 1;
-
                  csvPath = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/"
                         + args[forestIndex] + ".csv";
-                 TrialForest = new Forest (args[forestIndex], csvPath, setupForest(csvPath));
+                 ArrayList<Tree> tempForest = setupForest(csvPath);
+                 if(tempForest.isEmpty()){
+                     System.out.println("Forest is empty!");
+                     forestIndex += 1;
+                     csvPath = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/"
+                             + args[forestIndex] + ".csv";
+                     tempForest = setupForest(csvPath);
+
+                 }
+
+                 TrialForest = new Forest (args[forestIndex], csvPath, tempForest);
+
                 System.out.println("Initializing from " + args[forestIndex] );
 
 
@@ -115,7 +127,7 @@ private static boolean menu(String[] args){
                 keepGoing = false;
                 break;
             default:
-                System.out.println("Invalid choice. Please try again.");
+                System.out.println("Invalid menu option, try again");
         }
 
     }while( choice != 'X');
@@ -163,19 +175,55 @@ private static void simulateGrowth(Forest currentForest) {
 }// end of simulateGrowth METHOD
 
 private static void cutTree(Forest currentForest) {
-    System.out.println("Tree number to cut down: ");
+
     int indexToCut;
     indexToCut = 0;
-    indexToCut = keyboard.nextInt();
-    currentForest.cutTree(indexToCut);
+    boolean validInput = false;
+    int forestSize = 0;
+    forestSize = currentForest.getForestSize();
+    do{
+        System.out.println("Tree number to cut down: ");
+        try{
+            indexToCut = keyboard.nextInt();
+            validInput = true;
 
+        }catch(InputMismatchException e){
+            System.out.println("That is not an integer silly, try again");
+            validInput = false;
+            keyboard.next();
+        }
+
+    }while (!validInput );
+    if (indexToCut > forestSize){
+        System.out.println("Tree number " + indexToCut + " does not exist");
+        return;
+    }
+    else{
+        currentForest.cutTree(indexToCut);
+    }
 }// end of cutTree METHOD
 
 private static void reapTrees(Forest currentForrest) {
         int userInput = 0;
         int index;
+
+        boolean validInput = false;
+
+    do{
         System.out.println("Height to reap from: ");
-        userInput = keyboard.nextInt();
+        try{
+            userInput = keyboard.nextInt();
+            validInput = true;
+
+        }catch(InputMismatchException e){
+            System.out.println("That is not an integer silly, try again");
+            validInput = false;
+            keyboard.next();
+        }
+
+    }while (!validInput );
+
+
         for(index = 0; index < currentForrest.getForestSize(); index++){
             if (currentForrest.getHeightOfTreeAtIndex(index) > userInput){
                 System.out.print("Replacing the tall tree ");
@@ -187,8 +235,6 @@ private static void reapTrees(Forest currentForrest) {
 
             }// end of if
         }// end of for loop
-
-
 
 }// end of reapTrees METHOD
 
@@ -206,9 +252,12 @@ private static Forest loadForestFromDB(String fileName) {
         local = (Forest) fromStream.readObject();
         return (local);
     } catch (IOException e) {
-        System.out.println("ERROR loading fix yo shit! " + e.getMessage());
+        System.out.println("Error opening/reading" + fileName);
+        System.out.println("Old Forest retained");
         return (null);
     } catch (ClassNotFoundException e) {
+        System.out.println("Error opening/reading" + fileName);
+        System.out.println("Old Forest retained");
         System.out.println(e.getMessage());
         return (null);
     } finally {
@@ -247,7 +296,7 @@ private static ArrayList<Tree> setupForest(String fileName){
 
             }
         }catch(IOException e){
-            System.out.println("Error reading file stupid hoe!");
+            System.out.println("Error opening/reading from " + fileName);
 
         }
 
