@@ -79,20 +79,30 @@ private static boolean menu(String[] args){
                 reapTrees(TrialForest);
                 break;
             case 'S':
-                savedS = saveForestAsDB(csvPath, TrialForest);
+
+                String[] FindDBPath = csvPath.split("csv");
+                String dbPath = FindDBPath[0];
+                dbPath = dbPath + "db";
+
+                savedS = saveForestAsDB(dbPath, TrialForest);
                 if (savedS){
                     System.out.println("Happy Days, Saved successfully!");
                 }
                 break;
             case 'L':
-                loadForest(TrialForest.getName());
+                String inputForest = keyboard.next();
+                inputForest = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/" + inputForest + ".db";
+
+                TrialForest = loadForestFromDB(inputForest);
                 break;
             case 'N':
-                nextForest(args);
                 forestIndex += 1;
-                String newCSVPath = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/"
+
+                 csvPath = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/"
                         + args[forestIndex] + ".csv";
-                 TrialForest = new Forest (args[forestIndex], newCSVPath, setupForest(newCSVPath));
+                 TrialForest = new Forest (args[forestIndex], csvPath, setupForest(csvPath));
+                System.out.println("Initializing from " + args[forestIndex] );
+
 
                 break;
             case 'P':
@@ -116,7 +126,7 @@ private static boolean menu(String[] args){
 
 
 private static void printForest(Forest currentForest) {
-    System.out.println("Forrest name: " + currentForest.getName());
+    System.out.println("Forest name: " + currentForest.getName());
         currentForest.display();
 
 }// end of printForest METHOD
@@ -188,18 +198,31 @@ private static boolean saveForestAsDB(String ForestName, Forest currentForest) {
     return savedSuccessfully;
 }// end saveForestAsDB
 
-private static void loadForest(String fileName) {
-    //currentForest.loadForest(fileName);
+private static Forest loadForestFromDB(String fileName) {
+    ObjectInputStream fromStream = null;
+    Forest local;
+    try {
+        fromStream = new ObjectInputStream(new FileInputStream(fileName));
+        local = (Forest) fromStream.readObject();
+        return (local);
+    } catch (IOException e) {
+        System.out.println("ERROR loading fix yo shit! " + e.getMessage());
+        return (null);
+    } catch (ClassNotFoundException e) {
+        System.out.println(e.getMessage());
+        return (null);
+    } finally {
+        if (fromStream != null) {
+            try {
+                fromStream.close();
+            } catch (IOException e) {
+                System.out.println("ERROR Closing fix yo shit!" + e.getMessage());
+            }
+        }
+    }// end of finally
 
 }// end of loadForest METHOD
 
-private static void nextForest(String[] args) {
-        forestIndex += 1;
-        if(forestIndex >= args.length){
-            forestIndex = 0;
-        }
-
-}// end of nextForest
 
 
 
@@ -215,6 +238,7 @@ private static ArrayList<Tree> setupForest(String fileName){
             aLine = fromBuffer.readLine();
             while(aLine != null){
                 ListOfStrings = aLine.split(",");
+
                 ListOfMyTrees.add(new Tree(Tree.Species.valueOf(ListOfStrings[0]),
                         Integer.parseInt(ListOfStrings[1]),
                         Double.parseDouble(ListOfStrings[2]), Double.parseDouble(ListOfStrings[3]), treeNumber));

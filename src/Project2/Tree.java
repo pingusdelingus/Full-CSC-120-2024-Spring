@@ -1,10 +1,12 @@
 package Project2;
 
+import java.io.Serializable;
+
 /**
  *  This class represents a Tree
  *  with properties: species, birth year, height, and growth rate.
  */
-public class Tree {
+public class Tree implements Serializable {
     private double treeHeight;
     public enum Species{
         Birch,
