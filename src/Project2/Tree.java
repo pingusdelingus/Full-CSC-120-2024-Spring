@@ -42,7 +42,9 @@ public class Tree {
     }// end of reapTree METHOD
 
     public String toString(){
-        return this.Treespecies + "  " + this.birthYear + "  " + this.treeHeight + "' " + this.growthRatePerYear;
+        String myString = null;
+        myString = this.Treespecies + "  " + this.birthYear + "  " + String.format("%.2f" , this.treeHeight) + "' " + String.format("%.1f" ,this.growthRatePerYear)+ "%";
+        return myString;
     }// end of toString
 
     public double getHeight(){

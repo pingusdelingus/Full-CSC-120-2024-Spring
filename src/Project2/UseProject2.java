@@ -45,10 +45,7 @@ private static boolean menu(String[] args){
 
 
     Forest currentForest = new Forest();
-    //trial
-    File estebansFile = new File("Montane.csv");
-    String absolute = estebansFile.getAbsolutePath();
-    System.out.println(absolute);
+
 
     String csvPath = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/"
             + args[forestIndex] + ".csv";
@@ -102,7 +99,7 @@ private static boolean menu(String[] args){
 
                 printForest(TrialForest);
                 System.out.println("There are " + TrialForest.getForestSize() + " with an average height" +
-                        " of " + TrialForest.getAverageSize());
+                        " of " + String.format("%.2f" ,TrialForest.getAverageSize()));
                 break;
             case 'X':
                 keepGoing = false;
@@ -173,10 +170,10 @@ private static void reapTrees(Forest currentForrest) {
             if (currentForrest.getHeightOfTreeAtIndex(index) > userInput){
                 System.out.print("Replacing the tall tree ");
                 System.out.println(currentForrest.getSpecificTreeString(index));
-                currentForrest.cutTree(index);
+
                 System.out.print("Replaced with new tree ");
-                addTree(currentForrest);
-                System.out.println(currentForrest.getLatestTree());
+                currentForrest.replaceTreeAtIndex(index, currentForrest.generateRandomTree(index));
+                System.out.println(currentForrest.getSpecificTreeString(index));
 
             }// end of if
         }// end of for loop
