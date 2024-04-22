@@ -2,7 +2,7 @@ package Project2;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class Forest implements Serializable {
 

@@ -10,33 +10,17 @@ import java.io.*;
  */
 public class UseProject2 {
     public static int forestIndex = 0;
-
     private static final Scanner keyboard = new Scanner(System.in);
-
     public  static void main(String[] args) {
-
-
 
         String fileName;
         FileReader fromReader = null;
         int aChar;
 
-
-
         System.out.println("Welcome to the Forestry Simulation");
         System.out.println("----------------------------------");
 
-
         menu(args);
-
-
-
-
-
-
-
-
-
 
 }// end of main METHOD
 private static boolean menu(String[] args){
@@ -112,7 +96,7 @@ private static boolean menu(String[] args){
                  }
 
                  TrialForest = new Forest (args[forestIndex], csvPath, tempForest);
-
+                System.out.println("Moving to the next forest");
                 System.out.println("Initializing from " + args[forestIndex] );
 
 
