@@ -1,7 +1,7 @@
 package Project2;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.Locale;
+
 import java.util.Scanner;
 import java.io.*;
 
@@ -13,9 +13,9 @@ public class UseProject2 {
     private static final Scanner keyboard = new Scanner(System.in);
     public  static void main(String[] args) {
 
-        String fileName;
-        FileReader fromReader = null;
-        int aChar;
+
+
+
 
         System.out.println("Welcome to the Forestry Simulation");
         System.out.println("----------------------------------");
@@ -23,13 +23,13 @@ public class UseProject2 {
         menu(args);
 
 }// end of main METHOD
-private static boolean menu(String[] args){
-    boolean keepGoing = true;
+private static void menu(String[] args){
+
     char choice;
     boolean savedS;
 
 
-    Forest currentForest = new Forest();
+
 
 
     String csvPath = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/"
@@ -108,14 +108,14 @@ private static boolean menu(String[] args){
                         " of " + String.format("%.2f" ,TrialForest.getAverageSize()));
                 break;
             case 'X':
-                keepGoing = false;
+
                 break;
             default:
                 System.out.println("Invalid menu option, try again");
         }
 
     }while( choice != 'X');
-    return keepGoing;
+
 
 }// end of menu METHOD
 
