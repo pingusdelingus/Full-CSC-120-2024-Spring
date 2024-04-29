@@ -10,30 +10,53 @@ public class Forest implements Serializable {
     private String fileName;
     private ArrayList<Tree> listOfTrees = new ArrayList<>();
 
+    /**
+     * default constructor for Forest class
+     */
     public Forest() {
         name = "";
     }// end of default constructor
 
+    /**
+     * @param name     the name of the forest
+     * @param fileName the name of the file
+     * @param Trees    the list of trees
+     */
     public Forest(String name, String fileName, ArrayList<Tree> Trees) {
         this();
         this.name = name;
         this.fileName = fileName;
         this.listOfTrees = Trees;
     }// end of Forest constructor
-
+    /**
+     * @param tree     the name of the forest
+     *
+     */
     public void addTree(Tree tree) {
         listOfTrees.add(tree);
     }// end of addTree method
 
+    /**
+     * @param treeIndex the index of the tree to be removed
+     */
     public void cutTree(int treeIndex) {
         listOfTrees.remove(treeIndex);
 
     }// end of cutTree method
 
+    /** @param desiredIndex the index of the tree to be replaced
+     *
+     * @param randomTree the tree to replace the tree at the desired index
+     */
     public void replaceTreeAtIndex(int desiredIndex, Tree randomTree) {
         listOfTrees.set(desiredIndex, randomTree);
     }// end of replaceTreeAtIndex METHOD
 
+    /**
+     * @param fileName  the name of the file
+     * @param theForest the forest to be saved
+     * @return true if the forest is saved, false otherwise
+     */
     public boolean saveForest(String fileName, Forest theForest) {
         ObjectOutputStream toStream = null;
         try {
@@ -54,6 +77,10 @@ public class Forest implements Serializable {
         }
     }// end of saveForest
 
+    /** @return the name of the forest
+     *
+     *
+     */
     public String getName() {
         return this.name;
     }// end of getName
@@ -82,6 +109,10 @@ public class Forest implements Serializable {
         }// end of finally
     }// end of loadForest
 
+    /** displays the content of the forest
+     *
+     */
+
     public void display() {
         int index;
         for (index = 0; index < listOfTrees.size(); index++) {
@@ -91,10 +122,18 @@ public class Forest implements Serializable {
         }// end of for
     }// end of display
 
+    /** @return the size of the arraylist
+     *
+     *
+     */
     public int getForestSize() {
         return listOfTrees.size();
     }// end of getForestSize
 
+    /** @return computes the average tree height and returns it
+     *
+     *
+     */
     public double getAverageSize() {
         int index;
         double sum = 0;
@@ -105,6 +144,9 @@ public class Forest implements Serializable {
         return sum;
     }// end of getAverageSize
 
+    /** simulates growth of the entire forest
+     *
+     */
     public void growForest() {
         int index;
 
@@ -113,13 +155,23 @@ public class Forest implements Serializable {
             tempTree.grow(tempTree);
         }// end of for loop
     }// end of growForest
-
+    /**
+     * @return the height of the tree at the desired index
+     *
+     *
+     */
     public double getHeightOfTreeAtIndex(int desiredTreeIndex) {
 
         return listOfTrees.get(desiredTreeIndex).getHeight();
 
     }// end of getHeightOfTreeAtIndex
 
+
+    /**
+     * @return the string representation of the tree at the desired index
+     *
+     *
+     */
     public String getSpecificTreeString(int desiredTreeIndex) {
 
         return listOfTrees.get(desiredTreeIndex).toString();
@@ -132,6 +184,9 @@ public class Forest implements Serializable {
         return tempTree.toString();
     }// end of getLatestTree
 
+    /**
+     * @return generates random tree
+     */
     public Tree generateRandomTree(int index) {
         int randomBirthYear;
         double randomHeight, randomGrowthRate, randomSpecies;

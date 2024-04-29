@@ -6,8 +6,12 @@ import java.util.Scanner;
 import java.io.*;
 
 /**
+ * @author Esteban Morales
  * Driver class for Forestry Simulation Project
- */
+ * This is the main driver class for the Forestry Simulation Project.
+ *  * It provides a menu for the user to interact with the forest.
+ *  */
+
 public class UseProject2 {
     public static int forestIndex = 0;
     private static final Scanner keyboard = new Scanner(System.in);
@@ -19,10 +23,14 @@ public class UseProject2 {
 
         System.out.println("Welcome to the Forestry Simulation");
         System.out.println("----------------------------------");
-
+        //call the menu method to start the program
         menu(args);
 
 }// end of main METHOD
+/** @param args, array of Strings that program takes in to use as the forest name
+ *  This method is the main menu for the program. It allows the user to interact with the forest
+ *  by adding, cutting, growing, reaping, saving, loading, and moving to the next forest.
+ *  */
 private static void menu(String[] args){
 
     char choice;
@@ -49,22 +57,27 @@ private static void menu(String[] args){
 
         switch (choice) {
             case 'A':
+                //add a tree
                 addTree(TrialForest);
                 //done
                 break;
             case 'G':
+                //grow the forest
                 simulateGrowth(TrialForest);
                 //done
                 break;
             case 'C':
+                //cut a tree at a specified index
                 cutTree(TrialForest);
                 //done
                 break;
             case 'R':
+                //reap trees taller than a specified height
                 reapTrees(TrialForest);
                 break;
             case 'S':
-
+                //try to save the forest to a db file
+                //gets the path of the csv file and replaces it with db
                 String[] FindDBPath = csvPath.split("csv");
                 String dbPath = FindDBPath[0];
                 dbPath = dbPath + "db";
@@ -75,6 +88,7 @@ private static void menu(String[] args){
                 }
                 break;
             case 'L':
+                //load a forest from a db file
                 System.out.println("Enter forest name:");
                 String inputForest = keyboard.next();
                 inputForest = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/" + inputForest + ".db";
@@ -82,6 +96,7 @@ private static void menu(String[] args){
                 TrialForest = loadForestFromDB(inputForest);
                 break;
             case 'N':
+                //move to the next forest, tests for errors
                 forestIndex += 1;
                  csvPath = "/Users/esteballs/Documents/coding stuff/csc 120/CSC120_SPRING2024/src/Project2/"
                         + args[forestIndex] + ".csv";
@@ -102,12 +117,13 @@ private static void menu(String[] args){
 
                 break;
             case 'P':
-
+                //print the forest and its stats
                 printForest(TrialForest);
-                System.out.println("There are " + TrialForest.getForestSize() + " with an average height" +
+                System.out.println("There are " + TrialForest.getForestSize() + " trees, with an average height" +
                         " of " + String.format("%.2f" ,TrialForest.getAverageSize()));
                 break;
             case 'X':
+                //exit the program
 
                 break;
             default:
@@ -120,13 +136,19 @@ private static void menu(String[] args){
 }// end of menu METHOD
 
 
-
+/** @param currentForest, the forest to be printed
+ *  This method prints the forest and its stats
+ *  */
 private static void printForest(Forest currentForest) {
     System.out.println("Forest name: " + currentForest.getName());
         currentForest.display();
 
 }// end of printForest METHOD
 
+
+/** @param currentForest, the method to add randomly a tree to
+ *  This method adds a tree to the forest
+ *  */
 private static void addTree(Forest currentForest) {
     int randomBirthYear;
     double randomHeight, randomGrowthRate, randomSpecies;
@@ -153,11 +175,16 @@ private static void addTree(Forest currentForest) {
     currentForest.addTree(new Tree(newTreeSpecies, randomBirthYear, randomHeight, randomGrowthRate, currentForest.getForestSize()));
 }// end of addTree METHOD
 
+    /** @param currentForest, the forest to simulate growth on
+     *  This method simulates growth on the entire forest
+     *  */
 private static void simulateGrowth(Forest currentForest) {
     currentForest.growForest();
 
 }// end of simulateGrowth METHOD
 
+
+    //* @param currentForest, the forest to cut a tree from specified index
 private static void cutTree(Forest currentForest) {
 
     int indexToCut;
@@ -187,6 +214,10 @@ private static void cutTree(Forest currentForest) {
     }
 }// end of cutTree METHOD
 
+
+    /** @param currentForrest, the forest to reap trees from
+     *  This method reaps trees taller than a specified height
+     *  */
 private static void reapTrees(Forest currentForrest) {
         int userInput = 0;
         int index;
@@ -222,12 +253,18 @@ private static void reapTrees(Forest currentForrest) {
 
 }// end of reapTrees METHOD
 
+    /** @param ForestName, the path of the forest to save
+     *  @param currentForest, the forest to save
+     *  This method saves the forest to a db file
+     *  */
 private static boolean saveForestAsDB(String ForestName, Forest currentForest) {
         boolean savedSuccessfully;
         savedSuccessfully = currentForest.saveForest(ForestName ,currentForest);
     return savedSuccessfully;
 }// end saveForestAsDB
-
+/** @param fileName, the path of the forest to load
+ *  This method loads the forest from a db file
+ *  */
 private static Forest loadForestFromDB(String fileName) {
     ObjectInputStream fromStream = null;
     Forest local;
@@ -258,6 +295,9 @@ private static Forest loadForestFromDB(String fileName) {
 
 
 
+/** @param fileName, the path of the forest to setup
+ * from initially
+ * */
 
 private static ArrayList<Tree> setupForest(String fileName){
         BufferedReader fromBuffer = null;
